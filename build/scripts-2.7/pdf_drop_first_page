@@ -1,0 +1,33 @@
+#!/usr/bin/python
+
+# Load packages
+import argparse
+import os
+# from subprocess import call
+
+# Define arguments
+parser = argparse.ArgumentParser()
+parser.add_argument("input_file", help = "Required input pdf file.", nargs = "+")
+parser.add_argument("-o", "--output_file", default = False, help = "Output pdf file.")
+
+# Parse arguments
+args = parser.parse_args()
+args.input_file = " ".join(args.input_file)
+
+if args.output_file is False: 
+  
+  # Get things from file names
+  directory = os.path.dirname(args.input_file)
+  basename = os.path.basename(args.input_file)
+  output_file = os.path.splitext(basename)[0]
+  output_file = os.path.join(directory, output_file + "_no_first_page.pdf")
+  
+else:
+  
+  output_file = args.output_file
+  
+# System call
+# call(["pdftk", input_file, "cat 2-end output", output_file], shell = True)
+
+command = "pdftk " + args.input_file + " cat 2-end output " + output_file
+os.system(command)
