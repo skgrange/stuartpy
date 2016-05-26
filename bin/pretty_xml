@@ -9,31 +9,38 @@ from xml.dom.minidom import Node
 
 # Define arguments
 parser = argparse.ArgumentParser()
-parser.add_argument("-i", "--input_file", default = "", 
-                    help = "File name of XML file.")
-parser.add_argument("-o", "--output_file", default = "", 
+
+parser.add_argument("input_file", 
+  help = "Required file name of XML file to be converted.", nargs = "+")
+
+parser.add_argument("-o", "--output_file", default = False, 
                     help = "File name of converted file.")
                     
 # Parse arguments
 args = parser.parse_args()
 
-# Load file
-# xml = xml.dom.minidom.parse(args.input_file)
+# Make a string
+input_file = " ".join(args.input_file)
 
-# Remove whitespace
-# xml_string = xml.toprettyxml(indent = "", newl = "")
+# Ensure path is expanded
+input_file = os.path.expanduser(input_file)
 
-# Pretty print
-# Load file
-# xml_string = xml.toprettyxml(indent = "  ")
+# Default output file name
+if args.output_file is False: 
+  
+  # Get things from file names
+  directory = os.path.dirname(input_file)
+  basename = os.path.basename(input_file)
+  output_file = os.path.splitext(basename)[0]
+  output_file = os.path.join(directory, output_file + "_pretty.xml")
+  
+else:
+  
+  output_file = args.output_file
 
-# Save xml as text
-#f = open(args.output_file, "wb")
-#f.write(xml_string)
-#f.close()
 
+# Define function
 # http://stackoverflow.com/questions/3310614/remove-whitespaces-in-xml-string
-
 def remove_blanks(node):
   for x in node.childNodes:
     if x.nodeType == Node.TEXT_NODE:
@@ -42,11 +49,13 @@ def remove_blanks(node):
     elif x.nodeType == Node.ELEMENT_NODE:
       remove_blanks(x)
 
-xml = minidom.parse(args.input_file)
-remove_blanks(xml)
-xml.normalize()
+# Parse
+xml_object = minidom.parse(input_file)
 
-with file(args.output_file, "w") as result:
-  result.write(xml.toprettyxml(indent = "  "))
+# Pretty
+remove_blanks(xml_object)
+xml_object.normalize()
 
-
+# Export file
+with file(output_file, "w") as result:
+  result.write(xml_object.toprettyxml(indent = "  ", encoding = "utf-8"))

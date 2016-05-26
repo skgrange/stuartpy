@@ -12,7 +12,9 @@ parser.add_argument("-o", "--output_file", default = False, help = "Output pdf f
 
 # Parse arguments
 args = parser.parse_args()
-args.input_file = " ".join(args.input_file)
+
+# Make a string
+input_file = " ".join(args.input_file)
 
 if args.output_file is False: 
   
