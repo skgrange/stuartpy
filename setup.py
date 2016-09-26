@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name = "stuartpy",
-      version = "0.1.5",
+      version = "0.1.7",
       description = "Things",
       url = "http://github.com/skgrange",
       author = "Stuart K. Grange",
