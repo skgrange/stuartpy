@@ -1,9 +1,0 @@
-#!/usr/bin/python
-
-# Load packages
-import stuartpy
-from subprocess import call
-
-# Restart network adaptor if needed.
-if stuartpy.test_internet_connection() is False: 
-  call(["nmcli nm enable false && nmcli nm enable true"], shell = True)
