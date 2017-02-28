@@ -1,8 +1,8 @@
 from setuptools import setup
 
 setup(name = "stuartpy",
-      version = "0.1.7",
-      description = "Things",
+      version = "0.1.8",
+      description = "Things to do things",
       url = "http://github.com/skgrange",
       author = "Stuart K. Grange",
       author_email = "",
