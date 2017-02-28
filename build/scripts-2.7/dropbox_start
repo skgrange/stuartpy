@@ -1,4 +1,0 @@
-#!/bin/bash
-
-# Start dropbox
-dbus-launch dropbox start
